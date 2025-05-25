@@ -3,9 +3,12 @@ import User from "../models/userModel.js"
 
 
 const validateUserRegistration = (req, res, next) => {
-    const { email, password, firstName, lastName, state } = req.body
+    const { name,email, password} = req.body
     const errors = []
 
+    if (!name) {
+        errors.push("please add your name")
+    }
     if (!email) {
         errors.push("please add your email")
     }

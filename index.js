@@ -5,6 +5,7 @@ import cors from "cors"
 import { handleGetAllUserInfo, handleUserLogin, handleUserRegister } from "./Controllers/authController.js"
 import { handleFundsTransfer,  handleGetAllTransactions,  updateWalletBalance } from "./Controllers/transactionController.js"
 import { authorization, validateUserRegistration } from "./middleware/index.js"
+import routes from "./Routes/index.js"
 
 dotenv.config()
 
@@ -23,15 +24,4 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
 });
 
  
-app.post("/register",validateUserRegistration, handleUserRegister)
-
-app.post("/login",handleUserLogin)
-
-app.post("/update-balance", updateWalletBalance)
-
-app.post("/send-money",handleFundsTransfer)
-
-app.get("/all-info",handleGetAllUserInfo)
-
-
-app.get("/all-transactions",handleGetAllTransactions)
+app.use(routes)
