@@ -2,7 +2,8 @@ import User from "../models/userModel.js"
 import bcrypt  from "bcryptjs"
 import jwt from "jsonwebtoken"   
 import Wallet from "../models/walletModel.js"
-
+import findOneUser from "../service/index.js"
+ 
 
 const handleUserRegister = async (req,res) => {
     try {
@@ -58,7 +59,7 @@ const handleUserLogin = async (req,res) => {
     try {
         const { email, password } = req.body
         
-        const user = await User.findOne({ email })
+        const user = await findOneUser({email})
         
         if (!user) {
             return res.status(404).json({message:"User Account does not exist"})
@@ -98,6 +99,29 @@ const handleUserLogin = async (req,res) => {
     }
 }
 
+const handleGetAllUserInfo = async (req,res) => {
+    try {
+        const users = await User.find()
+        
+        const wallets = await Wallet.find()
+   
+        if (!users) {
+           return res.status(404).json({message:"User Account does not exist"})
+       }
+   
+       if (!wallets) {
+           return res.status(404).json({message:"Wallet Account does not exist"})
+       }
+        res.status(200).json({
+            message: "successfull",
+            users,
+            wallets
+        })
+        
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }     
+   }
 
 
-export {handleUserRegister,handleUserLogin}
+export {handleUserRegister,handleUserLogin,handleGetAllUserInfo}
