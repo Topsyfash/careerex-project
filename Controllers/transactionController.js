@@ -21,6 +21,7 @@ const updateWalletBalance = async (req, res) => {
         if (typeof amount !== "number") {
             return res.status(400).json({message:"Amount must be a number"})
         }
+
         
         if (amount <= 0) {
             return res.status(400).json({ message: "Amount Must be Greater Than 0" });
