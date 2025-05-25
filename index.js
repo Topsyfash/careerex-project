@@ -1,15 +1,17 @@
 import express from "express"
 import mongoose from "mongoose"
-import dotenv from "dotenv"    
+import dotenv from "dotenv"   
+import cors from "cors" 
 import { handleGetAllUserInfo, handleUserLogin, handleUserRegister } from "./Controllers/authController.js"
 import { handleFundsTransfer,  handleGetAllTransactions,  updateWalletBalance } from "./Controllers/transactionController.js"
-import { validateUserRegistration } from "./middleware/index.js"
+import { authorization, validateUserRegistration } from "./middleware/index.js"
 
 dotenv.config()
 
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 const PORT = process.env.PORT || 8000
 

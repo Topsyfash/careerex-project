@@ -15,13 +15,16 @@ const updateWalletBalance = async (req, res) => {
         }
 
         const user_id = user?._id
-        
+
         const userId = new mongoose.Types.ObjectId(user_id  );
 
         if (typeof amount !== "number") {
             return res.status(400).json({message:"Amount must be a number"})
         }
         
+        if (amount <= 0) {
+            return res.status(400).json({ message: "Amount Must be Greater Than 0" });
+        }
         const userWallet = await Wallet.findOneAndUpdate(
             { user_id: userId },
             { $inc: { balance: amount } }
