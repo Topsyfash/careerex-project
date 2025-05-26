@@ -13,10 +13,9 @@ const updateWalletBalance = async (req, res) => {
         if (!user) {
             return res.status(400).json({message:"User Not Found"})
         }
-
-        const user_id = user?._id
-
-        const userId = new mongoose.Types.ObjectId(user_id  );
+        if (user._id.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Unauthorized access" });
+        }
 
         if (typeof amount !== "number") {
             return res.status(400).json({message:"Amount must be a number"})
@@ -26,10 +25,16 @@ const updateWalletBalance = async (req, res) => {
         if (amount <= 0) {
             return res.status(400).json({ message: "Amount Must be Greater Than 0" });
         }
-        
+
+        const user_id = user?._id
+
+        const userId = new mongoose.Types.ObjectId(user_id  );
+
+
         const userWallet = await Wallet.findOneAndUpdate(
             { user_id: userId },
-            { $inc: { balance: amount } }
+            { $inc: { balance: amount } },
+            {new:true}
         )
         
         if (!userWallet) {
@@ -43,6 +48,7 @@ const updateWalletBalance = async (req, res) => {
             userWallet
         })
     } catch (error) {
+        console.log(error)
         res.status(500).json({message:error.message})
     }
 }
@@ -62,6 +68,9 @@ const handleFundsTransfer = async (req, res) => {
         }
 
         //  res.json({ sender, receiver })
+        if (sender._id.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Unauthorized access" });
+        }
          const senderId = new mongoose.Types.ObjectId(sender?._id );
          const receiverId = new mongoose.Types.ObjectId(receiver?._id );
          

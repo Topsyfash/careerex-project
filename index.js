@@ -2,9 +2,6 @@ import express from "express"
 import mongoose from "mongoose"
 import dotenv from "dotenv"   
 import cors from "cors" 
-import { handleGetAllUserInfo, handleUserLogin, handleUserRegister } from "./Controllers/authController.js"
-import { handleFundsTransfer,  handleGetAllTransactions,  updateWalletBalance } from "./Controllers/transactionController.js"
-import { authorization, validateUserRegistration } from "./middleware/index.js"
 import routes from "./Routes/index.js"
 
 dotenv.config()
