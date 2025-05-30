@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
-import Wallet from "./walletModel.js";
+import User from "./userModel.js";
 
 
 const transactionSchema = new mongoose.Schema({
-    senderId: { type: mongoose.Schema.Types.ObjectId, ref: Wallet, require: true },
-    receiverId: { type: mongoose.Schema.Types.ObjectId, ref: Wallet, require: true },
+    UserId: { type: mongoose.Schema.Types.ObjectId, ref: User, require: true },
+    counterpartyId: { type: mongoose.Schema.Types.ObjectId, ref: User, require: true },
     amount: { type: Number, require: true },
+    type:{type:String,enum:["credit","debit"],require:true},
     date:{type:Date,default:Date.now},
 }, { timestamps: true })
 

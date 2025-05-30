@@ -93,19 +93,28 @@ const handleFundsTransfer = async (req, res) => {
          await senderWallet.save()
          await receiverWallet.save()
          
-         const transaction = new Transaction({
-            senderId: senderWallet?._id,
-            receiverId: receiverWallet?._id,
-            amount,
+         const senderTransaction = new Transaction({
+            UserId: senderId,
+            counterpartyId: receiverId,
+             amount,
+            type:"debit",
             date:new Date()
         })
 
-         await transaction.save()
+        const receiverTransaction = new Transaction({
+            UserId: receiverId,
+            counterpartyId: senderId,
+             amount,
+            type:"credit",
+            date:new Date()
+        })
+        await senderTransaction.save()
+        await receiverTransaction.save()
          
          res.status(200).json({
             message: 'Transfer successful.',
-            transaction
-        })
+            senderTransaction
+        }) 
      } catch (error) {
         res.status(400).json({ message: error.message });
      }
@@ -131,4 +140,37 @@ const handleGetAllTransactions = async (req, res) => {
     
 }
 
-export {updateWalletBalance,handleFundsTransfer,handleGetAllTransactions}
+const handleGetUserWalletBalance = async (req,res) => {
+    try {
+        const wallet = await Wallet.findOne({ user_id: req.user._id })
+        if (!wallet) {
+            return res.status(404).json({message:"Wallet Not Found"})
+        }
+
+        res.status(200).json({
+            message: "Successful",
+            balance:wallet?.balance
+        })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+const handleGetPastTransactions = async (req,res) => {
+    try {
+        const transactions = await Transaction.find({ UserId: req.user._id })
+
+        if (transactions.length < 0) {
+            res.status().json({
+                message:"No transaction found"
+            })
+        }
+        res.status(200).json({
+            Message: "Successful",
+            transactions
+        })
+    } catch (error) {
+        
+    }
+}
+export {updateWalletBalance,handleFundsTransfer,handleGetAllTransactions,handleGetUserWalletBalance,handleGetPastTransactions}

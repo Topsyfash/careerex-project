@@ -21,10 +21,10 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
     });
 });
 
- 
-app.use(routes)
+  
+app.use("/api",routes)
 
-app.get("/",async (req,res) => {
+app.get("/api/",async (req,res) => {
   res.status(200).json({
     message:"Welcome to CareerEx Project Backend"
   })
