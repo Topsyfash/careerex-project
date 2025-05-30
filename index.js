@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import dotenv from "dotenv"   
 import cors from "cors" 
 import routes from "./Routes/index.js"
+import Transaction from "./models/transactionModel.js"
 
 dotenv.config()
 
@@ -22,3 +23,9 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
 
  
 app.use(routes)
+
+app.get("/",async (req,res) => {
+  res.status(200).json({
+    message:"Welcome to CareerEx Project Backend"
+  })
+})
