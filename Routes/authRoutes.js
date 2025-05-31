@@ -10,4 +10,4 @@ router.post("/login", handleUserLogin)
 
 router.get("/all-info",authorization, handleGetAllUserInfo)
 
-export default router
+export default router 

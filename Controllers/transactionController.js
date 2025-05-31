@@ -43,9 +43,18 @@ const updateWalletBalance = async (req, res) => {
 
         await userWallet.save()
 
+        const transaction = new Transaction({
+            UserId:user_id ,
+             amount,
+            type:"credit",
+            date:new Date()
+        })
+
+        await transaction.save()
         res.status(200).json({
             message: "Wallet balance Updated",
-            userWallet
+            userWallet,
+            transaction
         })
     } catch (error) {
         console.log(error)
@@ -120,26 +129,6 @@ const handleFundsTransfer = async (req, res) => {
      }
 }
 
-
-const handleGetAllTransactions = async (req, res) => {
-    
-    try {
-        const allTransactions = await Transaction.find()
-
-    if (!allTransactions) {
-        return res.status(404).json({message:"No transaction found"})
-    }
-
-    res.status(200).json({
-        message: "Successfull",
-        allTransactions
-    })
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-    
-}
-
 const handleGetUserWalletBalance = async (req,res) => {
     try {
         const wallet = await Wallet.findOne({ user_id: req.user._id })
@@ -172,5 +161,24 @@ const handleGetPastTransactions = async (req,res) => {
     } catch (error) {
         
     }
+}
+
+const handleGetAllTransactions = async (req, res) => {
+    
+    try {
+        const allTransactions = await Transaction.find()
+
+    if (!allTransactions) {
+        return res.status(404).json({message:"No transaction found"})
+    }
+
+    res.status(200).json({
+        message: "Successfull",
+        allTransactions
+    })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+    
 }
 export {updateWalletBalance,handleFundsTransfer,handleGetAllTransactions,handleGetUserWalletBalance,handleGetPastTransactions}

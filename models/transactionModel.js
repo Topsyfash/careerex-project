@@ -3,10 +3,10 @@ import User from "./userModel.js";
 
 
 const transactionSchema = new mongoose.Schema({
-    UserId: { type: mongoose.Schema.Types.ObjectId, ref: User, require: true },
-    counterpartyId: { type: mongoose.Schema.Types.ObjectId, ref: User, require: true },
-    amount: { type: Number, require: true },
-    type:{type:String,enum:["credit","debit"],require:true},
+    UserId: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true },
+    counterpartyId: { type: mongoose.Schema.Types.ObjectId, ref: User},
+    amount: { type: Number, required: true },
+    type:{type:String,enum:["credit","debit"],required:true},
     date:{type:Date,default:Date.now},
 }, { timestamps: true })
 
