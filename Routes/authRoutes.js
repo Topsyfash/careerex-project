@@ -4,10 +4,10 @@ import { handleGetAllUserInfo, handleUserLogin, handleUserRegister } from "../Co
 
 const router = express.Router()
 
-router.post("/register", validateUserRegistration, handleUserRegister)
+router.post("/auth/register", validateUserRegistration, handleUserRegister)
 
-router.post("/login", handleUserLogin)
+router.post("/auth/login", handleUserLogin)
 
-router.get("/all-info",authorization, handleGetAllUserInfo)
+// router.get("/all-info",authorization, handleGetAllUserInfo)
 
 export default router 

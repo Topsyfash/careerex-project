@@ -4,15 +4,15 @@ import { authorization } from "../middleware/index.js"
 
 const router = express.Router()
 
-router.post("/update-balance",authorization, updateWalletBalance)
+router.post("/wallet/update-balance",authorization, updateWalletBalance)
 
-router.post("/send-money",authorization,handleFundsTransfer)
+router.post("/wallet/transfer",authorization,handleFundsTransfer)
 
-router.get("/wallet-balance",authorization, handleGetUserWalletBalance)
+router.get("/wallet",authorization, handleGetUserWalletBalance)
 
 router.get("/transactions",authorization, handleGetPastTransactions)
 
-router.get("/all-transactions", authorization, handleGetAllTransactions)
+// router.get("/all-transactions", authorization, handleGetAllTransactions)
 
 
 
