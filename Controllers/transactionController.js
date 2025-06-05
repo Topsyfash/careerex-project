@@ -159,7 +159,7 @@ const handleGetPastTransactions = async (req,res) => {
             transactions
         })
     } catch (error) {
-        
+        res.status(500).json({ message: error.message })
     }
 }
 
