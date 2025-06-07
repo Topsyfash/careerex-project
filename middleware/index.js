@@ -3,28 +3,6 @@ import User from "../models/userModel.js"
 import { check, validationResult } from "express-validator"
 
 
-// const validateUserRegistration = (req, res, next) => {
-//     const { name,email, password} = req.body
-//     const errors = []
-
-//     if (!name) {
-//         errors.push("please add your name")
-//     }
-//     if (!email) {
-//         errors.push("please add your email")
-//     }
-    
-//     if(!password){
-//         errors.push("Please add your password")
-//     }
-
-//     if(errors.length > 0){
-//         return res.status(400).json({message: errors})
-//     }
-
-//     next()
-// }
-
 const validateUserRegistration = [
     check("name")
       .notEmpty()

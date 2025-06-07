@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 import dotenv from "dotenv"   
 import cors from "cors" 
 import routes from "./Routes/index.js"
-import Transaction from "./models/transactionModel.js"
+import cookieParser from "cookie-parser"
 
 dotenv.config()
 
@@ -11,6 +11,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
+app.use(cookieParser())
 
 const PORT = process.env.PORT || 8000
 
