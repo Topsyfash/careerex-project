@@ -52,7 +52,7 @@ const handleUserRegister = async (req, res) => {
         )
 
 
-        const verificationUrl = `http://localhost:8080/api/auth/verify-email?token=${verificationToken}`
+        const verificationUrl = `https://careerex-project.onrender.com/api/auth/verify-email?token=${verificationToken}`
 
         const veryfyMail = user?.email
 
@@ -190,7 +190,7 @@ const handleForgotPassword = async (req, res) => {
             { expiresIn: "10m" }
         );
 
-        const resetUrl = `http://localhost:8080/api/auth/reset-password?token=${token}`;
+        const resetUrl = `https://careerex-project.onrender.com/api/auth/reset-password?token=${token}`;
 
         await sendResetPasswordMail(user?.email, resetUrl);
 
